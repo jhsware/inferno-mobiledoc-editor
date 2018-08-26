@@ -1,6 +1,5 @@
-import createReactClass from 'create-react-class';
-import React from 'react';
-import { classToDOMCard } from '../src';
+import { Component } from 'inferno'
+import { classToDOMCard } from '../src'
 
 /**
  * Component-based cards are rendered with these props:
@@ -24,10 +23,10 @@ import { classToDOMCard } from '../src';
  * - `isInEditor` A bool indicating if the card is displayed inside an
  *    editor interface or not.
  */
-const Image = createReactClass({
-  displayName: 'ImageCard',
+class Image extends Component {
+
   render() {
-    const { isInEditor, payload, save, edit, isEditing } = this.props;
+    const { isInEditor, payload, save, edit, isEditing } = this.props
     if (isEditing) {
       return (
         <div>
@@ -35,20 +34,22 @@ const Image = createReactClass({
           <input type="text" ref="caption" defaultValue={payload.caption} /><br />
           <button onClick={() => save({ src: this.refs.src.value, caption: this.refs.caption.value })}>Save</button>
         </div>
-      );
+      )
     } else {
-      const onClick = isInEditor ? edit : null;
+      const onClick = isInEditor ? edit : null
       return (
         <div>
           <img src={payload.src} onClick={onClick} /><br />
           <small>{payload.caption}</small><br />
           {isInEditor && <button onClick={onClick}>Edit</button>}
         </div>
-      );
+      )
     }
   }
-});
+}
 
-const ImageCard = classToDOMCard(Image);
+Image.displayName = 'ImageCard'
 
-export default ImageCard;
+const ImageCard = classToDOMCard(Image)
+
+export default ImageCard

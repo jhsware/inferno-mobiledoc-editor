@@ -1,32 +1,32 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+import { render } from 'inferno'
+import { createElement } from 'inferno-create-element'
 
 const cardRenderer = (component, isEditing = false) => ({ env, options, payload }) => {
-  const targetNode = document.createElement('div');
-  const { didRender, onTeardown } = env;
+  const targetNode = document.createElement('div')
+  const { didRender, onTeardown } = env
 
   didRender(() => {
-    payload = { ...payload }; // deref payload
-    const { cardProps } = options;
-    const element = React.createElement(component, { ...env, ...cardProps, payload, isEditing });
-    ReactDOM.render(element, targetNode);
-  });
+    payload = { ...payload } // deref payload
+    const { cardProps } = options
+    const element = createElement(component, { ...env, ...cardProps, payload, isEditing })
+    render(element, targetNode)
+  })
 
-  onTeardown(() => ReactDOM.unmountComponentAtNode(targetNode));
+  onTeardown(() => render(null, targetNode))
 
-  return targetNode;
-};
+  return targetNode
+}
 
 export const classToDOMCard = (component) => {
   if (!component.displayName) {
-    throw new Error("Can't create card from component, no displayName defined: " + component);
+    throw new Error("Can't create card from component, no displayName defined: " + component)
   }
 
   return {
     name: component.displayName,
-    component,
+    // component,
     type: 'dom',
     render: cardRenderer(component),
     edit: cardRenderer(component, true)
-  };
-};
+  }
+}

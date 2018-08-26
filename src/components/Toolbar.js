@@ -1,8 +1,7 @@
-import React from 'react';
-import MarkupButton from './MarkupButton';
-import SectionButton from './SectionButton';
-import LinkButton from './LinkButton';
-import SectionSelect from './SectionSelect';
+import MarkupButton from './MarkupButton'
+import SectionButton from './SectionButton'
+import LinkButton from './LinkButton'
+import SectionSelect from './SectionSelect'
 
 const Toolbar = (props) =>
   <ul {...props}>
@@ -13,6 +12,6 @@ const Toolbar = (props) =>
     <li><SectionButton tag='blockquote' /></li>
     <li><SectionButton tag='ul'>UL</SectionButton></li>
     <li><SectionButton tag='ol'>OL</SectionButton></li>
-  </ul>;
+  </ul>
 
-export default Toolbar;
+export default Toolbar

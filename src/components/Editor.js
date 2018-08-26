@@ -1,26 +1,23 @@
-import PropTypes from 'prop-types';
-import React from 'react';
+import { Component } from 'inferno'
 
-import createReactClass from 'create-react-class';
+class Editor extends Component {
 
-const Editor = createReactClass({
-  displayName: 'Editor',
-
+  /*
   contextTypes: {
     editor: PropTypes.object
   },
+  */
 
   componentDidMount() {
-    const { editor } = this.context;
+    const { editor } = this.context
     if (editor) {
-      editor.render(this.refs.editor);
+      editor.render(this.editorEl)
     }
-  },
+  }
 
   render() {
-    const props = { ...this.props, ref: "editor" };
-    return <div {...props} />;
+    return <div ref={(el) => this.editorEl = el} {...this.props} />
   }
-});
+}
 
-export default Editor;
+export default Editor

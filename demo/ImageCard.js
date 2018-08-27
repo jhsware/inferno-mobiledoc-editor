@@ -1,5 +1,22 @@
+import { globalRegistry, createUtility } from 'component-registry'
 import { Component } from 'inferno'
-import { classToDOMCard } from '../src'
+
+import { Schema } from 'isomorphic-schema'
+import TextField from 'isomorphic-schema/lib/field_validators/TextField'
+import TextAreaField from 'isomorphic-schema/lib/field_validators/TextAreaField'
+
+import {
+  Form,
+  Button,
+  Modal,
+  ModalHeader,
+  ModalBody,
+  ModalFooter } from 'inferno-bootstrap'
+import { FormRows } from 'inferno-formlib'
+
+import { IMobileDocCardUtil } from './interfaces'
+
+
 
 /**
  * Component-based cards are rendered with these props:
@@ -23,33 +40,125 @@ import { classToDOMCard } from '../src'
  * - `isInEditor` A bool indicating if the card is displayed inside an
  *    editor interface or not.
  */
-class Image extends Component {
 
-  render() {
-    const { isInEditor, payload, save, edit, isEditing } = this.props
-    if (isEditing) {
-      return (
+const formSchema = new Schema('ImageCardForm', {
+  src: new TextField({
+    label: 'Image URI',
+    required: true
+  }),
+  caption: new TextAreaField({
+    label: 'Caption'
+  })
+})
+
+class ImageRender extends Component {
+
+  render ({ isInEditor, payload, edit }) {
+    const onClick = isInEditor ? edit : null
+    return (
+      <div style={{position: 'relative'}}>
         <div>
-          <input type="text" ref="src" defaultValue={payload.src} /><br />
-          <input type="text" ref="caption" defaultValue={payload.caption} /><br />
-          <button onClick={() => save({ src: this.refs.src.value, caption: this.refs.caption.value })}>Save</button>
+          <img src={payload.src} onClick={onClick} />
         </div>
-      )
-    } else {
-      const onClick = isInEditor ? edit : null
-      return (
         <div>
-          <img src={payload.src} onClick={onClick} /><br />
           <small>{payload.caption}</small><br />
-          {isInEditor && <button onClick={onClick}>Edit</button>}
         </div>
-      )
-    }
+        {isInEditor && <Button color="link" onClick={onClick} style={{position: 'absolute', right: 0, top: 0, color: 'white'}}>Edit</Button>}
+      </div>
+    )
   }
 }
 
-Image.displayName = 'ImageCard'
 
-const ImageCard = classToDOMCard(Image)
+class ImageEdit extends Component {
 
-export default ImageCard
+  constructor (props) {
+    super(...arguments)
+
+    this.didChange = this.didChange.bind(this)
+    this.doSubmit = this.doSubmit.bind(this)
+    this.doCancel = this.doCancel.bind(this)
+
+    this.state = {
+      validationErrors: undefined,
+      value: Object.assign({}, props.payload),
+      isOpen: true
+    }
+
+    // Prevents animations on mounting of form
+    this.isMounted = false
+  }
+
+  componentDidMount () {
+    this.isMounted = true
+  }
+
+  didChange (propName, value) {
+    const newValue = this.state.value
+    newValue[propName] = value
+    this.setState({
+      value: newValue
+    })
+  }
+
+  doCancel (e) {
+    e.preventDefault()
+    // TODO: Check if dirty
+    this.setState({ isOpen: false })
+    setTimeout(() => this.props.cancel(), 300)
+  }
+
+  doSubmit (e) {
+    e.preventDefault()
+    const validationErrors = formSchema.validate(this.state.value)
+    this.setState({
+      validationErrors
+    })
+
+    if (validationErrors === undefined) {
+      // Submit changes
+      this.setState({ isOpen: false })
+      setTimeout(() => this.props.save(this.state.value), 300)
+    } else {
+      // TODO: Show error message
+    }
+  }
+
+  render () {
+    return (
+      <div>
+        {this.props.children}
+
+        <Modal isOpen={this.state.isOpen} toggle={this.doCancel}>
+          <Form onSubmit={this.doSubmit}>
+            <ModalHeader>
+              Edit Image Card
+            </ModalHeader>
+            <ModalBody>
+              <FormRows
+                value={this.state.value}
+                schema={formSchema}
+                validationErrors={this.state.validationErrors}
+                isMounted={this.isMounted}
+
+                onChange={this.didChange} />
+            </ModalBody>
+            <ModalFooter>
+              <Button onClick={this.doCancel} color="link">Cancel</Button>
+              <Button type="submit" color="success">Save</Button>
+            </ModalFooter>
+          </Form>
+        </Modal>
+      </div>
+    )
+  }
+}
+
+createUtility({
+  implements: IMobileDocCardUtil,
+  name: 'ImageCard',
+  type: 'dom',
+  RenderComponent: ImageRender,
+  EditComponent: ImageEdit
+}).registerWith(globalRegistry)
+

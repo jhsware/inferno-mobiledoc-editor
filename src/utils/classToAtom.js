@@ -33,3 +33,11 @@ export const classToDOMAtom = (component) => {
     render: atomRenderer(component)
   }
 }
+
+export function utilityToCard ({ name, utility }) {
+  return {
+    name: name,
+    type: utility.type,
+    render: atomRenderer(utility.RenderComponent)
+  }
+}

@@ -1,14 +1,21 @@
 import { render } from 'inferno'
 import { createElement } from 'inferno-create-element'
 
-const cardRenderer = (component, isEditing = false) => ({ env, options, payload }) => {
+export const cardRenderer = (component, innerComponent) => ({ env, options, payload }) => {
   const targetNode = document.createElement('div')
   const { didRender, onTeardown } = env
 
   didRender(() => {
     payload = { ...payload } // deref payload
     const { cardProps } = options
-    const element = createElement(component, { ...env, ...cardProps, payload, isEditing })
+
+    // This is to allow the rendered content to stay visible during editing
+    // so we don't break the content when editing by means of a modal
+    let children
+    if (innerComponent) {
+      children = createElement(innerComponent, { ...env, ...cardProps, payload }, )
+    }
+    const element = createElement(component, { ...env, ...cardProps, payload }, children)
     render(element, targetNode)
   })
 
@@ -17,16 +24,11 @@ const cardRenderer = (component, isEditing = false) => ({ env, options, payload 
   return targetNode
 }
 
-export const classToDOMCard = (component) => {
-  if (!component.displayName) {
-    throw new Error("Can't create card from component, no displayName defined: " + component)
-  }
-
+export function utilityToCard (utility) {
   return {
-    name: component.displayName,
-    // component,
-    type: 'dom',
-    render: cardRenderer(component),
-    edit: cardRenderer(component, true)
+    name: utility._name,
+    type: utility.type,
+    render: cardRenderer(utility.RenderComponent),
+    edit: cardRenderer(utility.EditComponent, utility.RenderComponent)
   }
 }

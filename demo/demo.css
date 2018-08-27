@@ -1,0 +1,8 @@
+@import "mobiledoc-kit/dist/css/mobiledoc-kit.css";
+@import "bootstrap/dist/css/bootstrap.css";
+
+.Toolbar li {
+  list-style: none;
+  display: inline-block;
+  margin-right: 0.5rem;
+}

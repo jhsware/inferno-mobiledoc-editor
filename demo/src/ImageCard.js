@@ -1,9 +1,7 @@
-import { globalRegistry, createUtility } from 'component-registry'
+import { Utility } from 'component-registry'
 import { Component } from 'inferno'
 
-import { Schema } from 'isomorphic-schema'
-import TextField from 'isomorphic-schema/lib/field_validators/TextField'
-import TextAreaField from 'isomorphic-schema/lib/field_validators/TextAreaField'
+import { Schema, TextField, TextAreaField } from 'isomorphic-schema'
 
 import {
   Form,
@@ -101,8 +99,7 @@ class ImageEdit extends Component {
     })
   }
 
-  doCancel (e) {
-    e.preventDefault()
+  doCancel () {
     // TODO: Check if dirty
     this.setState({ isOpen: false })
     setTimeout(() => this.props.cancel(), 300)
@@ -154,11 +151,11 @@ class ImageEdit extends Component {
   }
 }
 
-createUtility({
+new Utility({
   implements: IMobileDocCardUtil,
   name: 'ImageCard',
   type: 'dom',
   RenderComponent: ImageRender,
   EditComponent: ImageEdit
-}).registerWith(globalRegistry)
+})
 

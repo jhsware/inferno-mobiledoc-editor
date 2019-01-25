@@ -1,5 +1,6 @@
 import classNames from 'classnames'
 import { UI } from 'mobiledoc-kit'
+import { Button } from 'inferno-bootstrap'
 
 const LinkButton = ({ children = "Link", type = "button", handler, className, ...props }, { editor, activeMarkupTags = []}) => {
   const onClick = () => {
@@ -19,7 +20,7 @@ const LinkButton = ({ children = "Link", type = "button", handler, className, ..
   })
 
   props = { type, ...props, onClick, className }
-  return <button { ...props }>{children}</button>
+  return <Button { ...props }>{children}</Button>
 }
 
 /*

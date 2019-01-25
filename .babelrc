@@ -1,32 +1,23 @@
 {
   "presets": [
-    ["env", { "modules": false }],
-    "stage-2",
-    "inferno-app"
+    ["@babel/env", {
+      "modules": false,
+      "targets": {
+        "browsers": ["last 2 versions", ">2%"]
+      }
+    }]
   ],
-
-  "plugins": [["babel-plugin-inferno", { "imports": true }], "transform-class-properties"],
-
-  "env": {
-    "production": {
-      "presets": [
-        ["env", { "modules": false }],
-        "stage-2",
-        "inferno-app"
-      ]
-    },
-    
-    "test": {
-      "presets": [
-        [
-          "env",
-          {
-            "targets": {
-              "browsers": ["last 2 versions", ">1%"]
-            }
-          }
-        ]
-      ]
-    }
-  }
+  "plugins": [
+    "add-module-exports",      
+    "@babel/proposal-class-properties",
+    "@babel/transform-runtime",
+    "@babel/syntax-object-rest-spread",
+    "@babel/syntax-jsx",
+    [
+      "babel-plugin-inferno",
+      {
+        "imports": true
+      }
+    ]
+  ]
 }

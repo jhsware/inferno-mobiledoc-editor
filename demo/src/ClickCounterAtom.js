@@ -1,5 +1,6 @@
 import { Component } from 'inferno'
-import { classToDOMAtom } from '../src'
+import { Utility } from 'component-registry'
+import { IMobileDocAtomUtil } from './interfaces'
 
 /**
  * Component-based atoms are rendered with these props:
@@ -42,6 +43,9 @@ class Counter extends Component {
 
 Counter.displayName = 'Counter'
 
-const ClickCounterAtom = classToDOMAtom(Counter)
-
-export default ClickCounterAtom
+new Utility({
+  implements: IMobileDocAtomUtil,
+  name: Counter.displayName,
+  type: 'dom',
+  RenderComponent: Counter,
+})

@@ -34,10 +34,11 @@ export const classToDOMAtom = (component) => {
   }
 }
 
-export function utilityToCard ({ name, utility }) {
+export function utilityToAtom ({ type, RenderComponent }) {
   return {
-    name: name,
-    type: utility.type,
-    render: atomRenderer(utility.RenderComponent)
+    name: RenderComponent.displayName,
+    component: RenderComponent,
+    type,
+    render: atomRenderer(RenderComponent)
   }
 }

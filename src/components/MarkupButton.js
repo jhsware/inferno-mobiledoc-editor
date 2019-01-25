@@ -1,5 +1,6 @@
 import classNames from 'classnames'
 import titleCase from '../utils/titleCase'
+import { Button } from 'inferno-bootstrap'
 
 const MarkupButton = ({ tag = '', type = 'button', children = titleCase(tag), className, ...props }, { editor, activeMarkupTags = []}) => {
   const onClick = () => editor.toggleMarkup(tag)
@@ -7,7 +8,7 @@ const MarkupButton = ({ tag = '', type = 'button', children = titleCase(tag), cl
     active: activeMarkupTags.indexOf(tag.toLowerCase()) > -1
   })
   props = { type, ...props, onClick, className }
-  return <button { ...props }>{children}</button>
+  return <Button { ...props }>{children}</Button>
 }
 
 /*

@@ -1,15 +1,15 @@
-import { render } from 'inferno'
+import { Component } from 'inferno'
 import { globalRegistry } from 'component-registry'
 import { IMobileDocCardUtil, IMobileDocAtomUtil } from './interfaces'
-import { utilityToCard } from '../src/utils/classToCard'
-import { utilityToAtom } from '../src/utils/classToAtom'
+import { utilityToCard, utilityToAtom } from 'inferno-mobiledoc-editor'
 
 import { Button, ButtonGroup } from 'inferno-bootstrap'
 
-import * as ReactMobiledoc from '../src'
+import * as ReactMobiledoc from 'inferno-mobiledoc-editor'
 import Toolbar from './Toolbar'
 import './ImageCard'
-import ClickCounterAtom from './ClickCounterAtom'
+import './ClickCounterAtom'
+import './App.css';
 
 const mobiledoc = {
   version: "0.3.0",
@@ -30,7 +30,7 @@ const atomUtils = globalRegistry.getUtilities(IMobileDocAtomUtil)
 const config = {
   mobiledoc,
   cards: cardUtils.map(utilityToCard),
-  atoms: [ClickCounterAtom], // atomUtils.map(utilityToAtom),
+  atoms: atomUtils.map(utilityToAtom), // [ClickCounterAtom], // atomUtils.map(utilityToAtom),
   placeholder: "Welcome to Mobiledoc!",
   willCreateEditor,
   didCreateEditor,
@@ -66,16 +66,21 @@ ClickCounterButton.contextTypes = {
 }
 */
 
+class App extends Component {
+  render() {
+    return (
+      <div className="App">
+        <ReactMobiledoc.Container {...config}>
+          <Toolbar className="Toolbar" />
+          <ButtonGroup className="Toolbar">
+            <ImageButton />
+            <ClickCounterButton />
+          </ButtonGroup>
+          <ReactMobiledoc.Editor />
+        </ReactMobiledoc.Container>
+      </div>
+    );
+  }
+}
 
-
-render(
-  <ReactMobiledoc.Container {...config}>
-    <Toolbar className="Toolbar" />
-    <ButtonGroup>
-      <ImageButton />
-      <ClickCounterButton />
-    </ButtonGroup>
-    <ReactMobiledoc.Editor />
-  </ReactMobiledoc.Container>,
-  document.getElementById('root')
-)
+export default App;

@@ -1,5 +1,6 @@
 import classNames from 'classnames'
 import titleCase from '../utils/titleCase'
+import { Button } from 'inferno-bootstrap'
 
 const SectionButton = ({ tag = '', type = 'button', children = titleCase(tag), className, ...props }, { editor, activeSectionTags = []}) => {
   const onClick = () => editor.toggleSection(tag)
@@ -7,7 +8,7 @@ const SectionButton = ({ tag = '', type = 'button', children = titleCase(tag), c
     active: activeSectionTags.indexOf(tag.toLowerCase()) > -1
   })
   props = { type, ...props, onClick, className }
-  return <button { ...props }>{children}</button>
+  return <Button { ...props }>{children}</Button>
 }
 
 /*

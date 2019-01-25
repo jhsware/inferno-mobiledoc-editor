@@ -1,5 +1,54 @@
-const SectionSelect = ({ tags = [], ...props }, { editor, activeSectionTags = []}) => {
-  const activeTag = () => tags.find((t) => activeSectionTags.includes(t))
+import { Component } from 'inferno'
+import {
+  Dropdown,
+  DropdownToggle,
+  DropdownMenu,
+  DropdownItem
+} from 'inferno-bootstrap'
+
+class SectionSelect extends Component {
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      dropdownOpen: false
+    }
+
+    this.toggle = this.toggle.bind(this)
+    this.didSelect = this.didSelect.bind(this)
+  }
+
+  _activeTag () {
+    return this.props.tags.find((t) => Array.isArray(this.props.activeSectionTags) ? this.props.activeSectionTags.includes(t) : false)
+  }
+
+  didSelect (val) {
+    const tag = val || this._activeTag()
+    this.context.editor.toggleSection(tag)
+  }
+
+  toggle() {
+    this.setState({
+      dropdownOpen: !this.state.dropdownOpen
+    });
+  }
+
+  render ({ tags = [], ...props }, { activeSectionTags = []}) {
+    const activeTag = () => tags.find((t) => activeSectionTags.includes(t))
+
+    return (
+      <Dropdown isOpen={this.state.dropdownOpen} onChange={this.didSelect} toggle={this.toggle}>
+        <DropdownToggle caret>{this._activeTag() || 'Select...'}</DropdownToggle>
+        <DropdownMenu>
+          { tags.map((t) => <DropdownItem onClick={() => this.didSelect(t)}>{t}</DropdownItem>) }
+        </DropdownMenu>
+      </Dropdown>
+    );
+  }
+}
+
+/*
+const SectionSelect =  => {
 
   const onChange = (event) => {
     const tag = event.target.value || activeTag()
@@ -13,6 +62,7 @@ const SectionSelect = ({ tags = [], ...props }, { editor, activeSectionTags = []
     </select>
   )
 }
+*/
 
 /*
 SectionSelect.propTypes = {

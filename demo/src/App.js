@@ -7,7 +7,7 @@ import { Button, ButtonGroup } from 'inferno-bootstrap'
 
 import * as ReactMobiledoc from 'inferno-mobiledoc-editor'
 import Toolbar from './Toolbar'
-import './ImageCard'
+import { ImageButton } from './ImageCard'
 import './ClickCounterAtom'
 import './App.css';
 
@@ -36,23 +36,6 @@ const config = {
   didCreateEditor,
   onChange
 }
-
-const imgPayload = { caption: "Edit this right meow!", src: "http://www.placekitten.com/300/200" }
-
-
-const ImageButton = (props, context) => {
-  const { isEditing } = props
-  const { editor } = context
-
-  const onClick = () => editor.insertCard('ImageCard', imgPayload, isEditing)
-  return <Button onClick={onClick}>Image Card</Button>
-}
-
-/*
-ImageButton.contextTypes = {
-  editor: PropTypes.object
-}
-*/
 
 const ClickCounterButton = (props, context) => {
   const { editor } = context

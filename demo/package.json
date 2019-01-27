@@ -7,6 +7,7 @@
     "inferno-mobiledoc-editor": "^0.6.0",
     "inferno-scripts": "7.0.4"
   },
+  "proxy": "http://localhost:3001",
   "scripts": {
     "start": "inferno-scripts start",
     "build": "inferno-scripts build",

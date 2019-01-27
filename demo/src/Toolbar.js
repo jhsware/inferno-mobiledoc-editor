@@ -6,6 +6,8 @@ import {
 } from 'inferno-mobiledoc-editor'
 import { ButtonGroup } from 'inferno-bootstrap'
 
+// TODO: Hook up to .cursorDidChange and force update in order to allow SectionSelect etc. to update.
+
 const Toolbar = (props) =>
   <ButtonGroup {...props}>
     <MarkupButton className="btn btn-secondary" tag='strong' />

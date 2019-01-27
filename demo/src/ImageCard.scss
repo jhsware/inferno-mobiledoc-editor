@@ -1,0 +1,9 @@
+.ImageCard {
+  position: relative;
+  display: inline-block;
+
+  .media-body {
+    background-color: var(--light);
+    color: var(--primary);
+  }
+}

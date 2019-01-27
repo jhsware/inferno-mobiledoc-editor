@@ -1,7 +1,8 @@
 import { Utility } from 'component-registry'
-import { Component } from 'inferno'
+import { Component, Fragment } from 'inferno'
 
 import { Schema, TextField, TextAreaField } from 'isomorphic-schema'
+import { ImageField } from './ImageUploadWidget'
 
 import {
   Form,
@@ -9,11 +10,14 @@ import {
   Modal,
   ModalHeader,
   ModalBody,
-  ModalFooter } from 'inferno-bootstrap'
+  ModalFooter,
+  Media,
+  MediaBody,
+  Image } from 'inferno-bootstrap'
 import { FormRows } from 'inferno-formlib'
 
 import { IMobileDocCardUtil } from './interfaces'
-
+import './ImageCard.scss'
 
 
 /**
@@ -40,7 +44,7 @@ import { IMobileDocCardUtil } from './interfaces'
  */
 
 const formSchema = new Schema('ImageCardForm', {
-  src: new TextField({
+  src: new ImageField({
     label: 'Image URI',
     required: true
   }),
@@ -54,15 +58,13 @@ class ImageRender extends Component {
   render ({ isInEditor, payload, edit }) {
     const onClick = isInEditor ? edit : null
     return (
-      <div style={{position: 'relative'}}>
-        <div>
-          <img src={payload.src} onClick={onClick} />
-        </div>
-        <div>
-          <small>{payload.caption}</small><br />
-        </div>
+      <Media vertical className="ImageCard">
+        <Image src={payload.src} onClick={onClick} />
+        <MediaBody>
+          <small>{payload.caption}</small>
+        </MediaBody>
         {isInEditor && <Button color="link" onClick={onClick} style={{position: 'absolute', right: 0, top: 0, color: 'white'}}>Edit</Button>}
-      </div>
+      </Media>
     )
   }
 }
@@ -158,4 +160,88 @@ new Utility({
   RenderComponent: ImageRender,
   EditComponent: ImageEdit
 })
+
+export class ImageButton extends Component {
+  constructor () {
+    super(...arguments)
+
+    this.state = {
+      showModal: false
+    }
+
+    this.doShowModal = this.doShowModal.bind(this)
+    this.doHideModal = this.doHideModal.bind(this)
+    this.doSubmit = this.doSubmit.bind(this)
+  }
+
+  doShowModal () {
+    // Store editor state som we can restore range selection
+    const { editor } = this.context
+    this.setState({
+      showModal: true,
+      range: editor.range
+    })
+  }
+
+  doHideModal () {
+    this.setState({
+      showModal: false,
+      range: undefined
+    })
+  }
+
+  doSubmit (payload) {
+    const { editor } = this.context
+
+    editor.run(postEditor => {
+      let position
+      if (editor.html === undefined) {
+        const p = postEditor.builder.createMarkupSection('p')
+        postEditor.insertSection(p)
+        // postEditor.setRange(postEditor.editor.post.sections.head.headPosition())
+        position = postEditor.editor.post.headPosition()
+      } else {
+        let { range } = this.state;
+        position = range.tail;
+      }
+      
+      /*
+      if (!range.isCollapsed) {
+        position = postEditor.deleteRange(range);
+      }
+      */
+     
+      let section = position.section;
+      if (section.isNested) { section = section.parent; }
+     
+      let collection = editor.post.sections;
+      const card = postEditor.builder.createCardSection('ImageCard', payload);
+      postEditor.insertSectionBefore(collection, card, section);
+
+      // It is important to explicitly set the range to the end of the card.
+      // Otherwise it is possible to create an inconsistent state in the
+      // browser. For instance, if the user clicked a button that
+      // called `editor.insertCard`, the editor surface may retain
+      // the selection but lose focus, and the next keystroke by the user
+      // will cause an unexpected DOM mutation (which can wipe out the
+      // card).
+      // See: https://github.com/bustle/mobiledoc-kit/issues/286
+      postEditor.setRange(section.headPosition());
+    })
+
+    this.setState({
+      showModal: false,
+      range: undefined
+    })
+  }
+
+  render () {
+    return (
+      <Fragment>
+        {this.state.showModal && <ImageEdit save={this.doSubmit} cancel={this.doHideModal} />}
+        <Button onClick={this.doShowModal}>img</Button>
+      </Fragment>
+    )
+  }
+}
 

@@ -6,3 +6,4 @@ lib/
 .cache
 demo/dist
 demo/fixtures
+demo/__upload__

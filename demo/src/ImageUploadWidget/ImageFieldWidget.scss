@@ -1,0 +1,86 @@
+
+/**
+ * FileUploadWidget
+ */
+ .InfernoFormlib-FileUploadWidget {
+  position: relative;
+  width: 15rem;
+  height: 5rem;
+
+  .ProgressContainer {
+    position: absolute;
+    top: 50%;
+    left: 10%;
+    right: 10%;
+    height: 1rem;
+    transform: translateY(-50%);
+    background-color: black;
+  }
+  .ProgressBar {
+    height: 100%;
+    background-color: white;
+    transition: width 0.3s ease-in-out;
+  }
+  .Error,
+  .Uploading,
+  .DragNDroppable {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    border: 4px dashed #ddd;
+    border-radius: 0.8rem;
+
+    transition: all 0.3s ease-in;
+  }
+
+  .DragNDroppable--drag {
+    background-color: rgba(0,0,0,0.6);
+    border-color: rgba(0,0,0,0);
+    
+    .placeholder {
+      color: white;
+    }
+  } 
+
+  .Error,
+  .Uploading,
+  .DragNDroppable--drag-hover {
+    background-color: rgba(0,0,0,0.8);
+    border-color: rgba(0,0,0,0);
+    .placeholder {
+      color: white;
+    }
+  }
+
+  .ErrorContainer {
+    text-align: center;
+    position: absolute;
+    top: 50%;
+    left: 10%;
+    right: 10%;
+    transform: translateY(-50%);
+  }
+
+  .Error p {
+    font-size: 0.85em;
+    color: white;
+    margin-bottom: 0.6em;
+  }
+
+  .form-control-file {    
+    height: 100%;
+    width: 100%;
+    opacity: 0;
+  }
+  
+  .placeholder {
+    position: absolute;
+    width: 80%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 0.9em;
+    color: #ccc;
+  }
+}
+

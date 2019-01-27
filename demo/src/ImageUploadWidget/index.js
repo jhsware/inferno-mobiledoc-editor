@@ -1,8 +1,10 @@
 import { Adapter } from 'component-registry'
 import { IImageField, ImageField } from './ImageField'
 import ImageFieldWidget from './ImageFieldWidget'
-import { IInputFieldWidget } from 'inferno-formlib'
+import { interfaces } from 'inferno-formlib'
 import './FileUploadUtil'
+
+const { IInputFieldWidget } = interfaces
 
 new Adapter({
   implements: IInputFieldWidget,

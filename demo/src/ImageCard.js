@@ -46,6 +46,8 @@ import './ImageCard.scss'
 const formSchema = new Schema('ImageCardForm', {
   src: new ImageField({
     label: 'Image URI',
+    uploadUtilName: 'Image.Simple',
+    placeholder: 'Click or drag to upload...',
     required: true
   }),
   caption: new TextAreaField({

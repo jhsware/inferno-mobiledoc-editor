@@ -4,7 +4,7 @@ import { interfaces } from 'inferno-formlib'
 
 const { IFileUploadUtil } = interfaces
 
-const FileUploadUtil = new Utility({
+new Utility({
   implements: IFileUploadUtil,
   name: 'Image.Simple',
 

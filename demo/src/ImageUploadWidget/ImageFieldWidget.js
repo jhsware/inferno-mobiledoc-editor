@@ -6,6 +6,7 @@ import {
   CardFooter,
   CardImg
 } from 'inferno-bootstrap'
+import './ImageFieldWidget.scss'
 
 const { FileUploadWidget } = widgets
 

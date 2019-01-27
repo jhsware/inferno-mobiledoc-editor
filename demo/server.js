@@ -11,11 +11,14 @@ app.use(logger((str, args) => {
   console.log(str)
 }))
 
-router.get('/images', koaStatic(__dirname + '/__uploads__/images', { index: false }))
 router.post('/upload', upload)
 
 app.use(router.routes())
    .use(router.allowedMethods())
+
+app.use(async (ctx, next) => {
+  await koaStatic(__dirname + '/__upload__', { index: false })(ctx, next)
+})
 
 const PORT = process.env.PORT || 3001
 

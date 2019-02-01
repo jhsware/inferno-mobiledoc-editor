@@ -13,7 +13,7 @@ const Toolbar = (props) =>
     <MarkupButton className="btn btn-secondary" tag='strong' />
     <MarkupButton className="btn btn-secondary" tag='em' />
     <LinkButton className="btn btn-secondary" />
-    <SectionSelect tags={["h1", "h2", "h3"]} title="Select..." />
+    <SectionSelect tags={["h1", "h2", "h3", "p"]} title="Other..." />
     <SectionButton className="btn btn-secondary" tag='blockquote' />
     <SectionButton className="btn btn-secondary" tag='ul'>UL</SectionButton>
     <SectionButton className="btn btn-secondary" tag='ol'>OL</SectionButton>

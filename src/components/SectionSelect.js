@@ -1,6 +1,6 @@
 import { Component } from 'inferno'
 import {
-  Dropdown,
+  ButtonDropdown,
   DropdownToggle,
   DropdownMenu,
   DropdownItem
@@ -18,8 +18,8 @@ class SectionSelect extends Component {
     this.didSelect = this.didSelect.bind(this)
   }
 
-  _activeTag () {
-    return this.props.tags.find((t) => Array.isArray(this.props.activeSectionTags) ? this.props.activeSectionTags.includes(t) : false)
+  _activeTag ({ tags = [] }, state, { activeSectionTags = []}) {
+    return tags.find((t) => Array.isArray(activeSectionTags) ? activeSectionTags.includes(t) : false)
   }
 
   didSelect (val) {
@@ -30,20 +30,18 @@ class SectionSelect extends Component {
   toggle() {
     this.setState({
       dropdownOpen: !this.state.dropdownOpen
-    });
+    })
   }
 
-  render ({ tags = [], ...props }, { activeSectionTags = []}) {
-    const activeTag = () => tags.find((t) => activeSectionTags.includes(t))
-
+  render ({ tags = [] }) {
     return (
-      <Dropdown isOpen={this.state.dropdownOpen} onChange={this.didSelect} toggle={this.toggle}>
-        <DropdownToggle caret>{this._activeTag() || 'Select...'}</DropdownToggle>
+      <ButtonDropdown isOpen={this.state.dropdownOpen} onChange={this.didSelect} toggle={this.toggle}>
+        <DropdownToggle caret>{this._activeTag(...arguments) || 'Select...'}</DropdownToggle>
         <DropdownMenu>
           { tags.map((t) => <DropdownItem onClick={() => this.didSelect(t)}>{t}</DropdownItem>) }
         </DropdownMenu>
-      </Dropdown>
-    );
+      </ButtonDropdown>
+    )
   }
 }
 

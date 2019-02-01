@@ -197,7 +197,7 @@ export class ImageButton extends Component {
 
     editor.run(postEditor => {
       let position
-      if (editor.html === undefined) {
+      if (editor.post.isBlank) {
         const p = postEditor.builder.createMarkupSection('p')
         postEditor.insertSection(p)
         // postEditor.setRange(postEditor.editor.post.sections.head.headPosition())

@@ -228,7 +228,7 @@ export class ImageButton extends Component {
       // will cause an unexpected DOM mutation (which can wipe out the
       // card).
       // See: https://github.com/bustle/mobiledoc-kit/issues/286
-      postEditor.setRange(section.headPosition());
+      postEditor.setRange(section.tailPosition());
     })
 
     this.setState({

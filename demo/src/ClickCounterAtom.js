@@ -15,30 +15,13 @@ import { IMobileDocAtomUtil } from './interfaces'
  * - `onTeardown`: A callback that can be called when the rendered content is torn down.
  */
 
-
-class Counter extends Component {
-
-  constructor () {
-    super(...arguments)
-
-    this.handleClick = this.handleClick.bind(this)
-  }
-
-  handleClick () {
-    const { payload, save, value } = this.props
-    const clicks = (payload.clicks || 0) + 1
-    save(value, { ...payload, clicks }) // updates payload.clicks, rerenders button
-  }
-
-  render () {
-    const { payload } = this.props
-
-    return (
-      <button onClick={this.handleClick}>
-        Clicks: {payload.clicks || 0}
-      </button>
-    )
-  }
+function Counter ({ payload, save, value }) {
+  let { clicks = 0 } = payload
+  return (
+    <button onClick={() => { clicks++; save(value, { ...payload, clicks }) }}>
+      Clicks: {clicks}
+    </button>
+  )
 }
 
 Counter.displayName = 'Counter'

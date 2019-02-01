@@ -9,6 +9,7 @@ import * as ReactMobiledoc from 'inferno-mobiledoc-editor'
 import Toolbar from './Toolbar'
 import { ImageButton } from './ImageCard'
 import './ClickCounterAtom'
+import { MentionInputHandler } from './MentionAtom'
 import './App.css';
 
 const mobiledoc = {
@@ -54,6 +55,7 @@ class App extends Component {
     return (
       <div className="App">
         <ReactMobiledoc.Container {...config}>
+          <MentionInputHandler />
           <Toolbar className="Toolbar" />
           <ButtonGroup className="Toolbar">
             <ImageButton />

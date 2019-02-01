@@ -1,7 +1,7 @@
 import { Utility } from 'component-registry'
 import { Component, Fragment } from 'inferno'
 
-import { Schema, TextField, TextAreaField } from 'isomorphic-schema'
+import { Schema, TextAreaField } from 'isomorphic-schema'
 import { ImageField } from './ImageUploadWidget'
 
 import {
@@ -246,4 +246,3 @@ export class ImageButton extends Component {
     )
   }
 }
-

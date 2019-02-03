@@ -1,10 +1,36 @@
 import { render } from 'inferno'
 import { createElement } from 'inferno-create-element'
 
-const atomRenderer = (component) => ({ env, options, payload, value }) => {
+/*
+  _createClass(AtomNode, [{
+    key: 'render',
+    value: function render() {
+      if (!this._rendered) {
+        var options = this.atomOptions;
+        var env = this.env;
+        var _model = this.model;
+        var value = _model.value;
+        var payload = _model.payload; // cache initial render
+
+        this._rendered = this.atom.render({
+          // TODO: Add editor
+          options: options,
+          env: env,
+          value: value,
+          payload: payload
+        });
+      }
+
+      this._validateAndAppendRenderResult(this._rendered);
+    }
+  }
+*/
+
+const atomRenderer = (component) => ({ editor, env, options, payload, value }) => {
   const { onTeardown } = env
 
   const element = createElement(component, {
+    editor,
     ...env,
     ...options,
     value,

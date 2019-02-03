@@ -1,9 +1,14 @@
 .Mention {
   position: relative;
+  background-color: #999;
+  color: white;
+  padding: 0.1rem 0.35rem 0.1rem 0.3rem;
+  border-radius: 4px;
 
   .DropdownList {
     position: absolute;
     left: 0;
+    color: black;
   }
 }
 

@@ -1,6 +1,7 @@
 import { Component } from 'inferno'
 import { Utility } from 'component-registry'
 import { IMobileDocAtomUtil } from './interfaces'
+import { Range } from 'mobiledoc-kit'
 import './MentionAtom.scss'
 
 /**
@@ -28,32 +29,76 @@ class DropdownList extends Component {
 }
 
 function DropdownListItem (props, context) {
-  return <div className="DropdownListItem" onClick={() => context.onSelect(props.children)}>{props.children}</div>
+  return <div className="DropdownListItem" onClick={() => context.onSelect(props.value)}>{props.children}</div>
 }
 
-function Mention ({ payload, save, value }) {
+class Mention extends Component {
 
-  return (
-    <i className="Mention">
-      @{value}
-      {!value &&
-        <DropdownList onSelect={(name) => {
-            save(name, { ...payload, name })
-            /*
-            const { range } = editor
-            editor.run(postEditor => {
-              range.extend(name.length)
-              const nextPos = range.tail
-              postEditor.setRange(nextPos)
-            })
-            */
-          }}>
-          <DropdownListItem>Jane</DropdownListItem>
-          <DropdownListItem>Jesper</DropdownListItem>
-          <DropdownListItem>Jossan</DropdownListItem>
-        </DropdownList>
-      }</i>
-  )
+  constructor () {
+    super(...arguments)
+
+    this.state = {
+      text: '',
+      options: [
+        { name: 'jane', title: 'Jane'},
+        { name: 'jane', title: 'Jessica'},
+        { name: 'jane', title: 'John'},
+        { name: 'jane', title: 'Justine'}
+      ]
+    }
+
+    this.didSelect = this.didSelect.bind(this)
+    this.onTextInput = this.onTextInput.bind(this)
+  }
+
+  componentDidMount () {
+    this._onTextInput = this.props.editor.addEventListener('onTextInput', this.onTextInput)
+  }
+
+  componentWillUnmount () {
+    this.props.editor.removeEventListener('onTextInput', this._onTextInput)
+  }
+
+  onTextInput (editor, matches) {
+    this.setState({
+      text: matches.input,
+      options: this.state.options.filter((opt) => opt.title.toLowerCase().startsWith(matches.input.toLowerCase()))
+    })
+  }
+
+  didSelect (val) {
+    const { editor, payload, save } = this.props
+    const { name, title } = val
+    let { range } = editor
+    
+    save(title, { ...payload, name })
+
+    editor.run(postEditor => {
+      const units = this.state.text.length
+      const newRange = new Range(range.tail.move(-units), range.tail, 1);
+      postEditor.deleteRange(newRange)
+      
+      const nextPos = newRange.head
+      postEditor.setRange(nextPos)
+      
+      this.setState({
+        text: ''
+      })
+    })
+  }
+
+  render ({ value }) {
+
+    return (
+      <i className="Mention">
+        @{value}
+        {!value &&
+          <DropdownList onSelect={this.didSelect}>
+              {this.state.options.map((item) => <DropdownListItem value={item}>{item.title}</DropdownListItem>)}
+          </DropdownList>
+        }</i>
+    )
+  }
 }
 
 Mention.displayName = 'Mention'
@@ -80,8 +125,8 @@ function replaceWithMention (editor) {
 export const MentionInputHandler = (props, context) => {
   context.editor.onTextInput({
     name: 'mention',
-    match: /\s?@$/,
-    run(editor) {
+    match: /^(@\S*)|\s(@\S*)/,
+    run(editor, matches) {
       replaceWithMention(editor)
     }
   })

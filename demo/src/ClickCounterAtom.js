@@ -1,6 +1,6 @@
-import { Component } from 'inferno'
 import { Utility } from 'component-registry'
 import { IMobileDocAtomUtil } from './interfaces'
+import { Button } from 'inferno-bootstrap'
 
 /**
  * Component-based atoms are rendered with these props:
@@ -18,9 +18,9 @@ import { IMobileDocAtomUtil } from './interfaces'
 function Counter ({ payload, save, value }) {
   let { clicks = 0 } = payload
   return (
-    <button onClick={() => { clicks++; save(value, { ...payload, clicks }) }}>
+    <Button onClick={() => { clicks++; save(value, { ...payload, clicks }) }}>
       Clicks: {clicks}
-    </button>
+    </Button>
   )
 }
 

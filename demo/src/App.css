@@ -1,5 +1,13 @@
+body {
+  background-color: var(--secondary);
+}
+
 .App {
   text-align: center;
+  max-width: 80rem;
+  margin: 0 auto;
+  background-color: var(--white);
+  padding: 0 1rem 1rem;
 }
 
 .App-logo {
@@ -30,17 +38,23 @@
   color: #fff;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.Toolbar.btn-group {
+  margin: 0.5rem;
 }
 
-
-.Toolbar.btn-group,
 .Toolbar .dropdown {
   margin: 0 0.5rem;
+}
+
+@media (max-width: 576px) {
+  .Toolbar.btn-group {
+    margin: 0.5rem -0.5rem;
+    overflow-x: scroll;
+    max-width: 100%;
+
+  }
+  
+  .Toolbar.btn-group > .btn {
+    font-size: 0.75rem;
+  }
 }

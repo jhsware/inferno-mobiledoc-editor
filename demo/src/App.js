@@ -3,11 +3,9 @@ import { globalRegistry } from 'component-registry'
 import { IMobileDocCardUtil, IMobileDocAtomUtil } from './interfaces'
 import { utilityToCard, utilityToAtom } from 'inferno-mobiledoc-editor'
 
-import { Button, ButtonGroup } from 'inferno-bootstrap'
-
 import * as ReactMobiledoc from 'inferno-mobiledoc-editor'
 import Toolbar from './Toolbar'
-import { ImageButton } from './ImageCard'
+
 import './ClickCounterAtom'
 import { MentionInputHandler } from './MentionAtom'
 import './App.css';
@@ -38,12 +36,6 @@ const config = {
   onChange
 }
 
-const ClickCounterButton = (props, context) => {
-  const { editor } = context
-  const onClick = () => editor.insertAtom('Counter', '', { clicks: 0 })
-  return <Button onClick={onClick}>Click Counter Atom</Button>
-}
-
 /*
 ClickCounterButton.contextTypes = {
   editor: PropTypes.object
@@ -57,10 +49,6 @@ class App extends Component {
         <ReactMobiledoc.Container {...config}>
           <MentionInputHandler />
           <Toolbar className="Toolbar" />
-          <ButtonGroup className="Toolbar">
-            <ImageButton />
-            <ClickCounterButton />
-          </ButtonGroup>
           <ReactMobiledoc.Editor />
         </ReactMobiledoc.Container>
       </div>

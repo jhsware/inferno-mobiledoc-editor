@@ -2,8 +2,16 @@
   position: relative;
   display: inline-block;
 
+  img {
+    width: 100%;
+  }
+
   .media-body {
     background-color: var(--light);
     color: var(--primary);
   }
+}
+
+.ImageCardModal.modal-dialog {
+  max-width: 50rem;
 }

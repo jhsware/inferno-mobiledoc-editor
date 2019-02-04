@@ -4,9 +4,16 @@ import {
   LinkButton,
   SectionSelect
 } from 'inferno-mobiledoc-editor'
-import { ButtonGroup } from 'inferno-bootstrap'
+import { ButtonGroup, Button } from 'inferno-bootstrap'
+import { ImageButton } from './ImageCard'
+import { RecipeButton } from './AdvancedCard'
 
 // TODO: Hook up to .cursorDidChange and force update in order to allow SectionSelect etc. to update.
+const ClickCounterButton = (props, context) => {
+  const { editor } = context
+  const onClick = () => editor.insertAtom('Counter', '', { clicks: 0 })
+  return <Button onClick={onClick}>Click Counter Atom</Button>
+}
 
 const Toolbar = (props) =>
   <ButtonGroup {...props}>
@@ -17,6 +24,9 @@ const Toolbar = (props) =>
     <SectionButton className="btn btn-secondary" tag='blockquote' />
     <SectionButton className="btn btn-secondary" tag='ul'>UL</SectionButton>
     <SectionButton className="btn btn-secondary" tag='ol'>OL</SectionButton>
+    <ImageButton />
+    <RecipeButton />
+    <ClickCounterButton />
   </ButtonGroup>
 
 export default Toolbar

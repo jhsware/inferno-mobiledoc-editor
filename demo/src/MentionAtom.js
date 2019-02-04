@@ -32,19 +32,20 @@ function DropdownListItem (props, context) {
   return <div className="DropdownListItem" onClick={() => context.onSelect(props.value)}>{props.children}</div>
 }
 
+const lst = [
+  { name: 'jane', title: 'Jane'},
+  { name: 'jane', title: 'Jessica'},
+  { name: 'jane', title: 'John'},
+  { name: 'jane', title: 'Justine'}
+]
+
 class Mention extends Component {
 
-  constructor () {
+  constructor ({ value }) {
     super(...arguments)
 
     this.state = {
-      text: '',
-      options: [
-        { name: 'jane', title: 'Jane'},
-        { name: 'jane', title: 'Jessica'},
-        { name: 'jane', title: 'John'},
-        { name: 'jane', title: 'Justine'}
-      ]
+      options: lst.filter((opt) => opt.title.toLowerCase().startsWith(value.toLowerCase()))
     }
 
     this.didSelect = this.didSelect.bind(this)
@@ -59,40 +60,59 @@ class Mention extends Component {
     this.props.editor.removeEventListener('onTextInput', this._onTextInput)
   }
 
-  onTextInput (editor, matches) {
-    this.setState({
-      text: matches.input,
-      options: this.state.options.filter((opt) => opt.title.toLowerCase().startsWith(matches.input.toLowerCase()))
-    })
-  }
+  onTextInput (editor, char) {
+    // Don't capture if payload is set
+    const { payload: { name } } = this.props
+    if (name) return
 
-  didSelect (val) {
-    const { editor, payload, save } = this.props
-    const { name, title } = val
-    let { range } = editor
-    
-    save(title, { ...payload, name })
+    // Enter triggers selection
+    if (char === '\n') {
+      const { save } = this.props
+      return save(this.state.options[0].title, this.state.options[0])
+      
+      // TODO: Delete the newline
+      /*
+      const { range } = editor
+      return editor.run(postEditor => {
+        const newRange = new Range(range.tail.move(1), range.tail, -1);
+        postEditor.deleteRange(newRange)
+      })
+      */
+    }
+
+    // Otherwise go ahead
+    const { save, value } = this.props
+    save(value + char)
+
+    const { range } = editor
 
     editor.run(postEditor => {
-      const units = this.state.text.length
-      const newRange = new Range(range.tail.move(-units), range.tail, 1);
+      const newRange = new Range(range.tail.move(-1), range.tail, 1);
       postEditor.deleteRange(newRange)
       
       const nextPos = newRange.head
       postEditor.setRange(nextPos)
-      
-      this.setState({
-        text: ''
-      })
     })
   }
 
-  render ({ value }) {
+  didSelect (val) {
+    const { editor, save } = this.props
+    const { title } = val
+    const { range } = editor
+    
+    save(title, val)
+
+    editor.run(postEditor => {
+      postEditor.setRange(range.tail)
+    })
+  }
+
+  render ({ value, payload: { name } }) {
 
     return (
       <i className="Mention">
         @{value}
-        {!value &&
+        {!name &&
           <DropdownList onSelect={this.didSelect}>
               {this.state.options.map((item) => <DropdownListItem value={item}>{item.title}</DropdownListItem>)}
           </DropdownList>

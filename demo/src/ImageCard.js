@@ -130,7 +130,7 @@ class ImageEdit extends Component {
       <div>
         {this.props.children}
 
-        <Modal isOpen={this.state.isOpen} toggle={this.doCancel}>
+        <Modal className="ImageCardModal" isOpen={this.state.isOpen} toggle={this.doCancel}>
           <Form onSubmit={this.doSubmit}>
             <ModalHeader>
               Edit Image Card

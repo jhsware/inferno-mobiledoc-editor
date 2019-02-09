@@ -1,14 +1,10 @@
 {
   "name": "inferno-mobiledoc-editor",
-  "version": "0.6.0",
+  "version": "7.0.0-alpha.1",
   "description": "A Mobiledoc editor for Inferno.js apps",
   "main": "dist/index.cjs.js",
   "module": "lib/index.js",
   "esnext": "src",
-  "__sideEffects__": [
-    "**/widgets/*.js",
-    "**/widgets/FileUploadWidget/*.js"
-  ],
   "scripts": {
     "test": "echo \"TODO: Write tests...\"",
     "prepublish": "npm run build",

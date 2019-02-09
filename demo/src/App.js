@@ -8,7 +8,7 @@ import Toolbar from './Toolbar'
 
 import './ClickCounterAtom'
 import { MentionInputHandler } from './MentionAtom'
-import './App.css';
+import './App.scss';
 
 const mobiledoc = {
   version: "0.3.0",

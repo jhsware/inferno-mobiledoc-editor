@@ -1,10 +1,10 @@
 .AdvancedCard {
   position: relative;
   display: block;
-  max-width: 50rem;
-  background-color: var(--light);
+  max-width: 40rem;
   margin: 0 auto;
   padding: 0.3rem;
+  border-bottom: 5px solid var(--cyan);
 
   img {
     width: 100%;

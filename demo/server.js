@@ -3,6 +3,7 @@ const logger = require('koa-logger')
 const koaRouter = require('koa-router') // koa-router@next
 const koaStatic = require('koa-static')
 const upload = require('./serverUpload')
+const scrape = require('./serverScrape')
 
 const app = new koa()
 const router = new koaRouter()
@@ -12,6 +13,7 @@ app.use(logger((str, args) => {
 }))
 
 router.post('/upload', upload)
+router.get('/scrape', scrape)
 
 app.use(router.routes())
    .use(router.allowedMethods())

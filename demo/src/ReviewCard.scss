@@ -1,0 +1,56 @@
+.AdvancedCard {
+  position: relative;
+  display: block;
+  max-width: 40rem;
+  margin: 0 auto;
+  padding: 0.3rem;
+  border-bottom: 5px solid var(--cyan);
+
+  img {
+    width: 100%;
+  }
+
+  .media-body {
+    color: var(--dark);
+    margin: 0 auto 0 0;
+    text-align: left;
+    padding: 0.5rem 0.2rem;
+  }
+}
+
+.ReviewModal.modal-dialog {
+  max-width: 50rem;
+
+
+  .InfernoFormlib-ListFieldRow {
+    display: flex;
+  }
+
+  .form-group {
+    flex-grow: 1;
+  }
+
+  .InfernoFormlib-ListFieldRowDeleteBtnWrapper {
+    margin-left: 1rem;
+  }
+
+  
+  .ReviewModal-ImageSelector {
+    display: flex;
+  }
+
+  .ReviewModal-ImageSelectorOption {
+    max-height: 8rem;
+    max-width: 8rem;
+    display: inline-block;
+
+    img {
+      width: 100%;
+    }
+  }
+}
+
+.ImageField .card-footer {
+  background-color: transparent;
+  border-top: none;
+}

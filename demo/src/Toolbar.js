@@ -6,7 +6,8 @@ import {
 } from 'inferno-mobiledoc-editor'
 import { ButtonGroup, Button } from 'inferno-bootstrap'
 import { ImageButton } from './ImageCard'
-import { AdvancedButton } from './AdvancedCard'
+import { RecipeButton } from './AdvancedCard'
+import { ReviewButton } from './ReviewCard'
 
 // TODO: Hook up to .cursorDidChange and force update in order to allow SectionSelect etc. to update.
 const ClickCounterButton = (props, context) => {
@@ -25,7 +26,8 @@ const Toolbar = (props) =>
     <SectionButton className="btn btn-secondary" tag='ul'>UL</SectionButton>
     <SectionButton className="btn btn-secondary" tag='ol'>OL</SectionButton>
     <ImageButton />
-    <AdvancedButton />
+    <RecipeButton />
+    <ReviewButton />
     <ClickCounterButton />
   </ButtonGroup>
 

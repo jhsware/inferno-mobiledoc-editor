@@ -56,8 +56,8 @@ const formSchema = new Schema('AdvancedCardForm', {
   description: new TextAreaField({
     label: 'Description'
   }),
-  ingrediences: new ListField({
-    label: 'Ingrediences',
+  items: new ListField({
+    label: 'Items',
     valueType: new TextField({})
   })
 })
@@ -73,7 +73,7 @@ class ImageRender extends Component {
           <h2>{payload.title}</h2>
           <p>{payload.description}</p>
           <ul>
-            {payload.ingrediences.map(row => <li>{row}</li>)}
+            {payload.items.map(row => <li>{row}</li>)}
           </ul>
         </MediaBody>
         {isInEditor && <Button color="link" onClick={onClick} style={{position: 'absolute', right: 0, top: 0, color: 'white'}}>Edit</Button>}
@@ -174,7 +174,7 @@ new Utility({
   EditComponent: ImageEdit
 })
 
-export class RecipeButton extends Component {
+export class AdvancedButton extends Component {
   constructor () {
     super(...arguments)
 

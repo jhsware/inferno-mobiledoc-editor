@@ -24,6 +24,21 @@ export default {
     'inferno-animation',
     'inferno-create-element',
     'inferno-shared',
-    'mobiledoc-kit'
+    'mobiledoc-kit',
+    '@babel/runtime/helpers/objectSpread',
+    '@babel/runtime/helpers/objectWithoutProperties',
+    '@babel/runtime/helpers/classCallCheck',
+    '@babel/runtime/helpers/createClass',
+    '@babel/runtime/helpers/possibleConstructorReturn',
+    '@babel/runtime/helpers/getPrototypeOf',
+    '@babel/runtime/helpers/inherits',
+    '@babel/runtime/helpers/assertThisInitialized',
+    'inferno-bootstrap'
   ]
 }
+
+/*
+
+
+
+*/

@@ -1,30 +1,32 @@
 import { render } from 'inferno'
 import { createElement } from 'inferno-create-element'
 
-export const cardRenderer = (component, innerComponent) => ({ env, options, payload }) => {
-  const targetNode = document.createElement('div')
-  const { didRender, onTeardown } = env
+export function cardRenderer(component, innerComponent) {
+  return ({ env, options, payload }) => {
+    const targetNode = document.createElement('div')
+    const { didRender, onTeardown } = env
+    didRender(() => {
+      const { context } = this
+      payload = { ...payload } // deref payload
+      const { cardProps } = options
 
-  didRender(() => {
-    payload = { ...payload } // deref payload
-    const { cardProps } = options
+      // This is to allow the rendered content to stay visible during editing
+      // so we don't break the content when editing by means of a modal
+      let children
+      if (innerComponent) {
+        children = createElement(innerComponent, { ...env, ...cardProps, payload, context }, )
+      }
+      const element = createElement(component, { ...env, ...cardProps, payload, context }, children)
+      render(element, targetNode)
+    })
 
-    // This is to allow the rendered content to stay visible during editing
-    // so we don't break the content when editing by means of a modal
-    let children
-    if (innerComponent) {
-      children = createElement(innerComponent, { ...env, ...cardProps, payload }, )
-    }
-    const element = createElement(component, { ...env, ...cardProps, payload }, children)
-    render(element, targetNode)
-  })
+    onTeardown(() => render(null, targetNode))
 
-  onTeardown(() => render(null, targetNode))
-
-  return targetNode
+    return targetNode
+  }
 }
 
-export function utilityToCard (utility) {
+export function utilityToCard (utility, cardRenderer) {
   return {
     name: utility._name,
     type: utility.type,

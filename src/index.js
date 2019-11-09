@@ -1,5 +1,5 @@
-import { utilityToCard } from './utils/classToCard'
-import { utilityToAtom, classToDOMAtom } from './utils/classToAtom'
+import { utilityToCard, cardRenderer } from './utils/classToCard'
+import { utilityToAtom, classToDOMAtom, atomRenderer } from './utils/classToAtom'
 import Container, { EMPTY_MOBILEDOC } from './components/Container'
 import Editor from './components/Editor'
 import LinkButton from './components/LinkButton'
@@ -9,8 +9,10 @@ import SectionSelect from './components/SectionSelect'
 
 export {
   utilityToCard,
+  cardRenderer,
   classToDOMAtom,
   utilityToAtom,
+  atomRenderer,
   Container,
   Editor,
   EMPTY_MOBILEDOC,

@@ -26,7 +26,7 @@ import { createElement } from 'inferno-create-element'
   }
 */
 
-const atomRenderer = (component) => ({ editor, env, options, payload, value }) => {
+export const atomRenderer = (component) => ({ editor, env, options, payload, value }) => {
   const { onTeardown } = env
 
   const element = createElement(component, {
@@ -45,7 +45,7 @@ const atomRenderer = (component) => ({ editor, env, options, payload, value }) =
   return targetNode
 }
 
-export const classToDOMAtom = (component) => {
+export const classToDOMAtom = (component, atomRenderer) => {
   if (!component.displayName) {
     throw new Error(
       `Can't create atom from component, no displayName defined: ${component}`
@@ -60,7 +60,7 @@ export const classToDOMAtom = (component) => {
   }
 }
 
-export function utilityToAtom ({ type, RenderComponent }) {
+export function utilityToAtom ({ type, RenderComponent }, atomRenderer) {
   return {
     name: RenderComponent.displayName,
     component: RenderComponent,

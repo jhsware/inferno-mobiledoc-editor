@@ -85,6 +85,10 @@ class Container extends Component {
     if (typeof this.props.didCreateEditor === 'function') {
       this.props.didCreateEditor(this.editor)
     }
+
+    if (typeof this.props.onCursorDidChange === 'function') {
+      this.editor.cursorDidChange(this.props.onCursorDidChange)
+    }
   }
 
   componentWillUnmount() {

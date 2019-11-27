@@ -87,7 +87,7 @@ class Container extends Component {
     }
 
     if (typeof this.props.onCursorDidChange === 'function') {
-      this.editor.cursorDidChange(this.props.onCursorDidChange)
+      this.editor.cursorDidChange(() => this.props.onCursorDidChange(this.editor))
     }
   }
 

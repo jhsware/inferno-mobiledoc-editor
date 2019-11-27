@@ -19,7 +19,8 @@ class SectionSelect extends Component {
   }
 
   _activeTag ({ tags = [] }, state, { activeSectionTags = []}) {
-    return tags.find((t) => Array.isArray(activeSectionTags) ? activeSectionTags.includes(t) : false)
+    const outp = tags.find((t) => Array.isArray(activeSectionTags) ? activeSectionTags.includes(t[1]) : false)
+    return Array.isArray(outp) ? outp[0] : outp
   }
 
   didSelect (val) {
@@ -35,10 +36,10 @@ class SectionSelect extends Component {
 
   render ({ tags = [] }) {
     return (
-      <ButtonDropdown isOpen={this.state.dropdownOpen} onChange={this.didSelect} toggle={this.toggle}>
-        <DropdownToggle caret>{this._activeTag(...arguments) || 'Select...'}</DropdownToggle>
+      <ButtonDropdown className={this.props.className} isOpen={this.state.dropdownOpen} onChange={this.didSelect} toggle={this.toggle}>
+        <DropdownToggle caret>{this._activeTag(...arguments) || this.props.title || 'Select...'}</DropdownToggle>
         <DropdownMenu>
-          { tags.map((t) => <DropdownItem onClick={() => this.didSelect(t)}>{t}</DropdownItem>) }
+          { tags.map((t) => <DropdownItem onClick={() => this.didSelect(t[1])}>{t[0]}</DropdownItem>) }
         </DropdownMenu>
       </ButtonDropdown>
     )

@@ -6,6 +6,13 @@ import LinkButton from './components/LinkButton'
 import MarkupButton from './components/MarkupButton'
 import SectionButton from './components/SectionButton'
 import SectionSelect from './components/SectionSelect'
+import {
+  Range,
+  Position,
+  Error,
+  VERSION,
+  MOBILEDOC_VERSION
+} from 'mobiledoc-kit'
 
 export {
   utilityToCard,
@@ -19,5 +26,11 @@ export {
   LinkButton,
   MarkupButton,
   SectionButton,
-  SectionSelect
+  SectionSelect,
+  
+  Range,
+  Position,
+  Error,
+  VERSION,
+  MOBILEDOC_VERSION
 }

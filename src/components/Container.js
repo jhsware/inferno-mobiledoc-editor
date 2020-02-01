@@ -63,6 +63,11 @@ class Container extends Component {
     }
   }
 
+  _onAnimationFrame () {
+    this.props.onAnimFrame(this.editor)
+    this._animFrameTick = requestAnimationFrame(() => this._onAnimationFrame())
+  }
+
   componentWillMount() {
     if (typeof this.props.willCreateEditor === 'function') {
       this.props.willCreateEditor()
@@ -75,23 +80,35 @@ class Container extends Component {
 
     this.editor.inputModeDidChange(this.setActiveTags)
 
-    if (typeof this.props.onChange === 'function') {
+    const {
+      onChange,
+      didCreateEditor,
+      onCursorDidChange,
+      onAnimFrame
+    } = this.props
+
+    if (typeof onChange === 'function') {
       this.editor.postDidChange(() => {
         const mobiledoc = this.editor.serialize(this.props.serializeVersion)
-        this.props.onChange(mobiledoc)
+        onChange(mobiledoc)
       })
     }
 
-    if (typeof this.props.didCreateEditor === 'function') {
-      this.props.didCreateEditor(this.editor)
+    if (typeof didCreateEditor === 'function') {
+      didCreateEditor(this.editor)
     }
 
-    if (typeof this.props.onCursorDidChange === 'function') {
-      this.editor.cursorDidChange(() => this.props.onCursorDidChange(this.editor))
+    if (typeof onCursorDidChange === 'function') {
+      this.editor.cursorDidChange(() => onCursorDidChange(this.editor))
+    }
+
+    if (typeof this.props.onAnimFrame === 'function') {
+      this._onAnimationFrame()
     }
   }
 
   componentWillUnmount() {
+    this._animFrameTick && cancelAnimationFrame(this._checkCursorPosAnimFrame)
     this.editor.destroy()
   }
 

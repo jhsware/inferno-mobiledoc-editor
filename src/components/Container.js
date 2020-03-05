@@ -1,6 +1,10 @@
 import { Component } from 'inferno'
 import Mobiledoc from 'mobiledoc-kit'
 
+if (typeof requestAnimationFrame === 'undefined') {
+
+}
+
 export const EMPTY_MOBILEDOC = {
   version: "0.3.0",
   markups: [],
@@ -103,7 +107,10 @@ class Container extends Component {
     }
 
     if (typeof this.props.onAnimFrame === 'function') {
-      this._onAnimationFrame()
+      // Do nothing if we are doing SSR
+      if (typeof requestAnimationFrame !== 'undefined') {
+        this._onAnimationFrame()
+      }
     }
   }
 

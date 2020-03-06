@@ -106,7 +106,7 @@ class Container extends Component {
       this.editor.cursorDidChange(() => onCursorDidChange(this.editor))
     }
 
-    if (typeof this.props.onAnimFrame === 'function') {
+    if (typeof onAnimFrame === 'function') {
       // Do nothing if we are doing SSR
       if (typeof requestAnimationFrame !== 'undefined') {
         this._onAnimationFrame()

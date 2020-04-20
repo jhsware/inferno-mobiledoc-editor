@@ -26,7 +26,7 @@
     "inferno": "^7.3.3",
     "inferno-bootstrap": "^7.2.0",
     "inferno-create-element": "^7.3.3",
-    "mobiledoc-kit": "^0.12.4"
+    "mobiledoc-kit": "https://github.com/jhsware/inferno-mobiledoc-editor/raw/master/devPackages/mobiledoc-kit-0.12.4.tgz"
   },
   "peerDependencies": {},
   "devDependencies": {

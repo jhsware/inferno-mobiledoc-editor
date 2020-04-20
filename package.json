@@ -26,7 +26,7 @@
     "inferno": "^7.3.3",
     "inferno-bootstrap": "^7.2.0",
     "inferno-create-element": "^7.3.3",
-    "mobiledoc-kit": "https://github.com/jhsware/inferno-mobiledoc-editor/raw/e7aaa20b8c216bf5d4e1e5634d18294f190ba2e7/devPackages/mobiledoc-kit-0.12.3.tgz"
+    "mobiledoc-kit": "^0.12.4"
   },
   "peerDependencies": {},
   "devDependencies": {
@@ -47,7 +47,7 @@
     "babel-preset-inferno-app": "^8.0.3",
     "babel-register": "^6.26.0",
     "bootstrap": "^4.1.3",
-    "component-registry": "^1.2.0",
+    "component-registry": "^1.3.1",
     "create-inferno-app": "^7.0.6",
     "cross-env": "^5.2.0",
     "formidable": "^1.2.1",

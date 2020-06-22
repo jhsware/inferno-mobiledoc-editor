@@ -24,7 +24,7 @@
   "dependencies": {
     "classnames": "^2.2.6",
     "inferno": "^7.3.3",
-    "inferno-bootstrap": "^7.3.1",
+    "inferno-bootstrap": "^7.3.2",
     "inferno-create-element": "^7.3.3",
     "mobiledoc-kit": "https://github.com/jhsware/inferno-mobiledoc-editor/raw/master/devPackages/mobiledoc-kit-0.12.4.tgz"
   },
@@ -52,7 +52,7 @@
     "cross-env": "^5.2.0",
     "formidable": "^1.2.1",
     "inferno-devtools": "^7.3.3",
-    "inferno-formlib": "^7.3.2",
+    "inferno-formlib": "^7.3.3",
     "inferno-router": "^7.3.3",
     "inferno-scripts": "^7.0.4",
     "inferno-test-utils": "^7.3.3",

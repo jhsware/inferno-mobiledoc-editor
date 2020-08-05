@@ -37,7 +37,7 @@ export function utilityToCard (utility, cardRenderer, deserializeUtil) {
   return {
     name: utility._name,
     type: utility.type,
-    render: cardRenderer(utility.RenderComponent),
+    render: cardRenderer(utility.RenderComponent, undefined, deserializeUtil),
     edit: cardRenderer(utility.EditComponent, utility.RenderComponent, deserializeUtil)
   }
 }

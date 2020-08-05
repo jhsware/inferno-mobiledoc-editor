@@ -68,8 +68,8 @@ class Container extends Component {
   }
 
   _onAnimationFrame () {
-    this.props.onAnimFrame(this.editor)
     this._animFrameTick = requestAnimationFrame(() => this._onAnimationFrame())
+    this.props.onAnimFrame(this.editor)
   }
 
   componentWillMount() {

@@ -1,6 +1,6 @@
 {
   "name": "inferno-mobiledoc-editor",
-  "version": "7.0.1",
+  "version": "7.1.0",
   "description": "A Mobiledoc editor for Inferno.js apps",
   "main": "dist/index.cjs.js",
   "module": "lib/index.js",
